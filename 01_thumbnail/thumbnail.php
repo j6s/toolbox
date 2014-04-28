@@ -35,7 +35,7 @@ class thumbnail {
         $filename = str_replace($this->cache_dir."thumbs/","",$filename);
 
         $filehash = md5_file($file);
-        $filehash == ($file == $filehash) ? "" : "_".$filehash;
+        $filehash = ($filename == $filehash) ? "" : "_".$filehash;
         $filetype = $this->getFiletype($file);
 
         return $this->cache_dir."thumbs/".$filename."_{$type}_{$size}".$filehash.".".$filetype;
