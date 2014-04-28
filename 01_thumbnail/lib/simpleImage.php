@@ -17,7 +17,7 @@
 * http://www.gnu.org/licenses/gpl.html
 */
 
-namespace toolbox;
+namespace toolbox\lib;
 
 class simpleImage {
    

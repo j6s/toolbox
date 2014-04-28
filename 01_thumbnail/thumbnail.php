@@ -12,6 +12,10 @@
 namespace toolbox;
 
 class thumbnail {
+
+    function __construct($cache_dir){
+        $this->cache_dir = $cache_dir;
+    }
 	/**
 	* @param string $file
 	* @param integer $width
@@ -20,7 +24,7 @@ class thumbnail {
 		// echo "<h1>creating thumb for $file </h1>";
 		$cache_dir = $this->cache_dir;
 		$filename = str_replace(dirname($file),"",$file);
-		$filename = str_replace(".".thumbnail::getFiletype($file),"",$filename);		
+		$filename = str_replace(".".$this->getFiletype($file),"",$filename);
 
 		if(!is_dir($cache_dir)){
 			mkdir($cache_dir);
@@ -30,7 +34,7 @@ class thumbnail {
 			mkdir($cache_dir."thumbs");
 		}
 
-  		$filetype = thumbnail::getFiletype($file);		
+  		$filetype = $this->getFiletype($file);
 		$filehash = md5_file($file);
 
 		$SInamespace = __NAMESPACE__."\\lib\\simpleImage";
@@ -50,16 +54,16 @@ class thumbnail {
 	function getThumb($file, $width = 300){
 		$cache_dir = $this->cache_dir;	
 		$filename = str_replace(dirname($file),"",$file);
-		$filename = str_replace(".".thumbnail::getFiletype($file),"",$filename);		
+		$filename = str_replace(".".$this->getFiletype($file),"",$filename);
 
 
-  		$filetype = thumbnail::getFiletype($file);		
+  		$filetype = $this->getFiletype($file);
 		$filehash = md5_file($file);
 		@$expTime = filectime($file) + $this->cache_lifetime;
   		if(file_exists($cache_dir."thumbs/".$filename."_thumb_".$filehash.".".$filetype) && $expTime > time()){
   			// file is valid, do nothing
   		}else{
-  			thumbnail::createThumb($file,$width);
+            $this->createThumb($file,$width);
   		}
 
   		return $cache_dir."thumbs/".$filename."_thumb_".$filehash.".".$filetype;
@@ -73,7 +77,7 @@ class thumbnail {
 		// echo "<h1>creating thumb for $file </h1>";
 		$cache_dir = $this->cache_dir;
 		$filename = str_replace(dirname($file),"",$file);
-		$filename = str_replace(".".thumbnail::getFiletype($file),"",$filename);		
+		$filename = str_replace(".".$this->getFiletype($file),"",$filename);
 
 		if(!is_dir($cache_dir)){
 			mkdir($cache_dir);
@@ -83,7 +87,7 @@ class thumbnail {
 			mkdir($cache_dir."thumbs");
 		}
 
-  		$filetype = thumbnail::getFiletype($file);		
+  		$filetype = $this->getFiletype($file);
 		$filehash = md5_file($file);
 
 		$SInamespace = __NAMESPACE__."\\lib\\simpleImage";
@@ -92,7 +96,7 @@ class thumbnail {
 
 		$image->square($width);
 
-		$image->save($cache_dir."thumbs/".$filename."_square_".$filehash.".".$filetype);		
+		$image->save($cache_dir."thumbs/".$filename."_square_".$filehash.".".$filetype);
 	
 	}
 
@@ -103,16 +107,16 @@ class thumbnail {
 	function getSquareThumb($file, $width = 300){
 		$cache_dir = $this->cache_dir;	
 		$filename = str_replace(dirname($file),"",$file);
-		$filename = str_replace(".".thumbnail::getFiletype($file),"",$filename);		
+		$filename = str_replace(".".$this->getFiletype($file),"",$filename);
 
 
-  		$filetype = thumbnail::getFiletype($file);		
+  		$filetype = $this->getFiletype($file);
 		$filehash = md5_file($file);
 		@$expTime = filectime($file) + $this->cache_lifetime;
   		if(file_exists($cache_dir."thumbs/".$filename."_square_".$filehash.".".$filetype) && $expTime > time()){
   			// file is valid, do nothing
   		}else{
-  			thumbnail::createSquareThumb($file,$width);
+            $this->createSquareThumb($file,$width);
   		}
 
   		return $cache_dir."thumbs/".$filename."_square_".$filehash.".".$filetype;
@@ -120,8 +124,8 @@ class thumbnail {
 
 
 	function extract($file){
-		$cache_dir = $this->cfg->home_dir.$this->cfg->cache_dir;
-		$filetype = thumbnail::getFiletype($file);		
+		$cache_dir = $this->cache_dir;
+		$filetype = $this->getFiletype($file);
 		$filehash = md5_file($file);
 
 
