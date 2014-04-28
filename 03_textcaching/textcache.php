@@ -4,11 +4,11 @@ namespace toolbox;
 class textcache{
 	function __construct($cache_dir,$lifetime){
 		$this->cache_dir = $cache_dir;
-		$this->cache_lifetime = $lifetime
+		$this->cache_lifetime = $lifetime;
 	}
 	function exists($hash){
 		if(!empty($this->cache_dir)){
-			$cache_dir = $this->cache_dir
+			$cache_dir = $this->cache_dir;
 		} else {
 			$cache_dir = "content/cache/";
 		}
@@ -16,7 +16,7 @@ class textcache{
 		if(!empty($this->cache_lifetime)){
 			$lifetime = $this->cache_lifetime;
 		} else {
-			$lifetime = 110592000 //5 years lifetime
+			$lifetime = 110592000; //5 years lifetime
 		}
 
 		$file = $cache_dir."txt/".$hash.".html";
