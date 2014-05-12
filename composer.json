@@ -1,4 +1,8 @@
 {
 	"name": "thephpjo/toolbox",
-	"version": "1.0"
+	"autoload": {
+		"PSR-4": {
+			"thephpjo\\toolbox\\": ["src"]
+		}
+	}
 }

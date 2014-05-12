@@ -6,7 +6,7 @@
  *
  * @see github.com/thephpjo/toolbox
  **/
-namespace toolbox;
+namespace thephpjo\toolbox;
 /*
 * Autoloader
 * takes namespace as input

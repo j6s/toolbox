@@ -1,5 +1,5 @@
 <?php
-namespace toolbox;
+namespace thephpjo\toolbox;
 
 class textcache
 {

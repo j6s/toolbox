@@ -9,7 +9,8 @@
 **/
 
 
-namespace toolbox;
+namespace thephpjo\toolbox;
+
 
 class thumbnail {
 
@@ -87,7 +88,7 @@ class thumbnail {
 		$image->square($width);
 
 		$image->save($this->getName($file,$width,"square"));
-	
+
 	}
 
 	/**
