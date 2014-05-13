@@ -12,6 +12,8 @@ namespace thephpjo\toolbox;
 * takes namespace as input
 * namespace must equal path to file
 * classname must equal filename
+*
+* @deprecated y u no use composer?
 */
 class autoloader {
     static function load($name){

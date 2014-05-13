@@ -1,8 +1,8 @@
 {
 	"name": "thephpjo/toolbox",
 	"autoload": {
-		"PSR-4": {
-			"thephpjo\\toolbox\\": ["src"]
+		"psr-4": {
+			"thephpjo\\toolbox\\": "src"
 		}
 	}
 }

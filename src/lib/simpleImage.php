@@ -4,23 +4,23 @@
 * Author: Simon Jarvis
 * Modified by: Miguel Fermín
 * Based in: http://www.white-hat-web-design.co.uk/articles/php-image-resizing.php
-* 
-* This program is free software; you can redistribute it and/or 
-* modify it under the terms of the GNU General Public License 
-* as published by the Free Software Foundation; either version 2 
+*
+* This program is free software; you can redistribute it and/or
+* modify it under the terms of the GNU General Public License
+* as published by the Free Software Foundation; either version 2
 * of the License, or (at your option) any later version.
-* 
-* This program is distributed in the hope that it will be useful, 
-* but WITHOUT ANY WARRANTY; without even the implied warranty of 
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
-* GNU General Public License for more details: 
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details:
 * http://www.gnu.org/licenses/gpl.html
 */
 
-namespace toolbox\lib;
+namespace thephpjo\toolbox\lib;
 
 class simpleImage {
-   
+
 	var $image;
 	var $image_type;
 
@@ -49,10 +49,10 @@ class simpleImage {
 		if( $image_type == IMAGETYPE_JPEG ) {
 			imagejpeg($this->image,$filename,$compression);
 		} elseif( $image_type == IMAGETYPE_GIF ) {
-			imagegif($this->image,$filename);         
+			imagegif($this->image,$filename);
 		} elseif( $image_type == IMAGETYPE_PNG ) {
 			imagepng($this->image,$filename);
-		}   
+		}
 		if( $permissions != null) {
 			chmod($filename,$permissions);
 		}
@@ -64,7 +64,7 @@ class simpleImage {
 			imagejpeg($this->image, null, $quality);
 		} elseif( $image_type == IMAGETYPE_GIF ) {
 			header("Content-type: image/gif");
-			imagegif($this->image);         
+			imagegif($this->image);
 		} elseif( $image_type == IMAGETYPE_PNG ) {
 			header("Content-type: image/png");
 			imagepng($this->image);
@@ -96,14 +96,14 @@ class simpleImage {
 
 		if($this->getWidth() > $this->getHeight()){
 			$this->resizeToHeight($size);
-			
+
 			imagecolortransparent($new_image, imagecolorallocate($new_image, 0, 0, 0));
 			imagealphablending($new_image, false);
 			imagesavealpha($new_image, true);
 			imagecopy($new_image, $this->image, 0, 0, ($this->getWidth() - $size) / 2, 0, $size, $size);
 		} else {
 			$this->resizeToWidth($size);
-			
+
 			imagecolortransparent($new_image, imagecolorallocate($new_image, 0, 0, 0));
 			imagealphablending($new_image, false);
 			imagesavealpha($new_image, true);
@@ -112,25 +112,25 @@ class simpleImage {
 
 		$this->image = $new_image;
 	}
-   
+
 	function scale($scale) {
 		$width = $this->getWidth() * $scale/100;
-		$height = $this->getHeight() * $scale/100; 
+		$height = $this->getHeight() * $scale/100;
 		$this->resize($width,$height);
 	}
-   
+
 	function resize($width,$height) {
 		$new_image = imagecreatetruecolor($width, $height);
-		
+
 		imagecolortransparent($new_image, imagecolorallocate($new_image, 0, 0, 0));
 		imagealphablending($new_image, false);
 		imagesavealpha($new_image, true);
-		
+
 		imagecopyresampled($new_image, $this->image, 0, 0, 0, 0, $width, $height, $this->getWidth(), $this->getHeight());
-		$this->image = $new_image;   
+		$this->image = $new_image;
 	}
         function cut($x, $y, $width, $height){
-                $new_image = imagecreatetruecolor($width, $height);	
+                $new_image = imagecreatetruecolor($width, $height);
 
                 imagecolortransparent($new_image, imagecolorallocate($new_image, 0, 0, 0));
 		imagealphablending($new_image, false);
@@ -142,7 +142,7 @@ class simpleImage {
 	}
 	function maxarea($width, $height = null){
 		$height = $height ? $height : $width;
-		
+
 		if($this->getWidth() > $width){
 			$this->resizeToWidth($width);
 		}
@@ -152,26 +152,26 @@ class simpleImage {
 	}
 
 	function cutFromCenter($width, $height){
-		
+
 		if($width < $this->getWidth() && $width > $height){
 			$this->resizeToWidth($width);
 		}
 		if($height < $this->getHeight() && $width < $height){
 			$this->resizeToHeight($height);
 		}
-		
+
 		$x = ($this->getWidth() / 2) - ($width / 2);
 		$y = ($this->getHeight() / 2) - ($height / 2);
-		
+
 		return $this->cut($x, $y, $width, $height);
 	}
 
 	function maxareafill($width, $height, $red = 0, $green = 0, $blue = 0){
 	    $this->maxarea($width, $height);
-	    $new_image = imagecreatetruecolor($width, $height); 
+	    $new_image = imagecreatetruecolor($width, $height);
 	    $color_fill = imagecolorallocate($new_image, $red, $green, $blue);
-	    imagefill($new_image, 0, 0, $color_fill);        
-	    imagecopyresampled($new_image, $this->image, floor(($width - $this->getWidth())/2), floor(($height-$this->getHeight())/2), 0, 0, $this->getWidth(), $this->getHeight(), $this->getWidth(), $this->getHeight()); 
+	    imagefill($new_image, 0, 0, $color_fill);
+	    imagecopyresampled($new_image, $this->image, floor(($width - $this->getWidth())/2), floor(($height-$this->getHeight())/2), 0, 0, $this->getWidth(), $this->getHeight(), $this->getWidth(), $this->getHeight());
 	    $this->image = $new_image;
 	}
 
